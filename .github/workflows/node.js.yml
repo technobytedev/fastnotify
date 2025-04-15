@@ -32,9 +32,8 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: production-build
+        name: production-build-${{ matrix.node-version }}
         path: dist
-        retention-days: 1
 
   deploy:
     needs: build
@@ -42,11 +41,17 @@ jobs:
     if: github.ref == 'refs/heads/main'
     
     steps:
-    - name: Download build artifacts
+    - name: Download all build artifacts
       uses: actions/download-artifact@v4
       with:
-        name: production-build
-        path: dist
+        path: artifacts
+    
+    - name: Select latest build
+      run: |
+        # Get the most recent artifact (alphabetical sort works for version numbers)
+        latest=$(ls -d artifacts/production-build-* | sort -V | tail -n 1)
+        cp -r "$latest/dist" ./dist
+        echo "Using build from $latest"
     
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
@@ -54,7 +59,5 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
         publish_branch: gh-pages
-        force_orphan: true
-        keep_files: false
         user_name: 'technobytedev'
         user_email: 'cedricisubol@gmail.com'
