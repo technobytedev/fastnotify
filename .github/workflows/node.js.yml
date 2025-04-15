@@ -67,3 +67,6 @@ jobs:
         npm install --save-dev gh-pages
         npm run build
         npx gh-pages -d dist  # Adjust this to your build output folder, 'dist' is commonly used
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
