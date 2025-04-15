@@ -1,0 +1,41 @@
+.notify-container {
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .notify-container.top-right {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .notify-toast {
+    padding: 12px 16px;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    animation: fade-in 0.3s ease-out;
+  }
+  
+  .notify-toast.info    { background-color: #2196f3; }
+  .notify-toast.success { background-color: #4caf50; }
+  .notify-toast.error   { background-color: #f44336; }
+  .notify-toast.warning { background-color: #ff9800; }
+  
+  .fade-out {
+    animation: fade-out 0.5s ease-in forwards;
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; transform: translateY(-10px); }
+  }
+  
